@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: code-api
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/testdb # testApi
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update # create
+    properties:
+      hibernate:
+        format_sql: true
+  servlet:
+    multipart:
+      max-request-size: 30MB
+      max-file-size: 10MB
+
+org:
+  zerock:
+    upload:
+      path: upload # 프로젝트 실행 폴더 내에 upload 폴더를 생성해서 파일 보관
+
+logging.level:
+    org.hibernate.sql: debug
+    org.hibernate.orm.jdbc.bind: trace
+    org.springframework.security.web: trace
