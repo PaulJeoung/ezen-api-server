@@ -21,19 +21,30 @@ import java.util.Map;
     HTTP요청이 애플리케이션으로 들어오면 OncePerRequestFilter가 요청을 가로챔
     doFilterInternal() 메서드가 호출되어 필터링 로직이 실행됨
     필터링 작업을 마친 후 filterChain.doFilter 호출 하면 다음 필터 또는 컨트롤러가 요청을 처리 함
+    react kapi key :  293596f68efad223adcc7b78d14d7689
+    react kapi secret key : NqlGFbzAFtTwlQVc9CghCOvfhoIHLYDB
 */
 @Slf4j
 public class JWTCheckFilter extends OncePerRequestFilter {
 
     @Override // 검증 제외할 필터 (url)
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        String path = request.getRequestURI();
-        
-        if (path.startsWith("/api/member/")){
-            return true; // member 로그인 필터 해제
+
+        if(request.getMethod().equals("OPTIONS")) { //
+            return true;
         }
-        log.info("shouldNotFilter()\n----------------\ncheck_URL : {} ", path);
+
+        String path = request.getRequestURI();
         // return false <-- 체크함 , return true <-- 체크안함
+
+        if(path.startsWith("/api/member/")){ // member 로그인 필터 해제
+            return true;
+        }
+
+        if(path.startsWith("/api/products/view/")){ // 이미지 조회 경로를 체크 하지 않는다면,
+            return true;
+        }
+
         return false; // super.shouldNotFilter(request);
     }
 
