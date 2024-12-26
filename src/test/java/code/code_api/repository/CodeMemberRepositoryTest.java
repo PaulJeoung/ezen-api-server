@@ -2,6 +2,7 @@ package code.code_api.repository;
 
 import code.code_api.domain.CodeMember;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.apache.bcel.classfile.Code;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,19 @@ class CodeMemberRepositoryTest {
 
     @Autowired private CodeMemberRepository codeMemberRepository;
     @Autowired private PasswordEncoder passwordEncoder;
+
+    @Test // 소셜 가입 회원 삭제
+    void 카카오삭제() {
+        String email = "3846982924@ezen.com";
+        CodeMember member = codeMemberRepository.getWithRoles(email);
+        if(member == null){
+            log.info("회원이 존재하지 않습니다. 이메일 : {}", email);
+            return;
+        }
+        // 삭제
+        codeMemberRepository.delete(member);
+        log.info("회원 삭제 완료 : {}", email);
+    }
 
     @Test
     void 회원가입() {
